@@ -1,0 +1,43 @@
+﻿<Window x:Class="WPFTestApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFTestApp"
+        mc:Ignorable="d"
+        Title="Sending" Height="350" Width="450">
+    <DockPanel LastChildFill="True">
+        <Menu VerticalAlignment="Top" Height="25" DockPanel.Dock="Top">
+            <MenuItem Header="Выбрать файл-контейнер" Click="MenuItem_Click"/>
+            <MenuItem Name="Methods" Header="Выбрать метод сокрытия">
+                <MenuItem Header="Метод наименее значащего бита" IsCheckable="True" IsChecked="True" Checked="LSB_Method"/>
+                <MenuItem Header="Метод блочного сокрытия" IsCheckable="True" Checked="Block_Method"/>
+                <MenuItem Header="Метод псевдослучайного интервала" IsCheckable="True" Checked="PRI_Method"/>
+            </MenuItem>
+        </Menu>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="95"/>
+                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="95"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition x:Name="KeyRow" Height="25"/>
+                <RowDefinition/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="Hide_Button" Content="Спрятать" Click="Hide" Grid.Column="0" Grid.Row="3" Margin="2"/>
+            <Button x:Name="Find_Button" Content="Достать" Click="Find" Grid.Column="2" Grid.Row="3" Margin="2"/>
+            <TextBox x:Name="Text" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="6" TextWrapping="NoWrap" AcceptsReturn="True" Text="" Margin="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+            <TextBox x:Name="Key1" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Text="м|/|JI/-|Я" Margin="2"/>
+            <TextBox x:Name="Key2" Grid.Column="2" Grid.Row="1" TextWrapping="Wrap" Text="|&lt;0Р0В|&lt;А" Margin="2"/>
+            <Label x:Name="Image_Adress" Content="Файл-контейнер не выбран" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="6" Margin="2" AllowDrop="True" Drop="Image_Adress_Drop"/>
+            <ComboBox Name="Choose_color" Grid.Column="3" Grid.Row="1" Margin="15 2" IsReadOnly="True" SelectionChanged="UpdateShifter"/>
+            <ComboBox Name="Choose_bite" Grid.Column="4" Grid.Row="1" Margin="15 2" IsReadOnly="True" SelectionChanged="UpdateShifter"/>
+        </Grid>
+    </DockPanel>
+</Window>
