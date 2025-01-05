@@ -173,10 +173,10 @@ namespace Sending
             int mask = 1 << Shifter;
             for (int bitcount = 0; y < bmp.Height; bitcount++)
             {
-                bitcount %= charsize;
-                if (bitcount == 0)
+                if (bitcount == charsize)
                 {
                     text += BitsToChar(buffer);
+                    bitcount = 0;
                 }
 
                 int pixel = bmp.GetPixel(x, y).ToArgb();
@@ -364,10 +364,10 @@ namespace Sending
             int[] buffer = new int[charsize];
             for (int bitcount = 0; y + Block_Height < bmp.Height; bitcount++)
             {
-                bitcount %= charsize;
-                if (bitcount == 0)
+                if (bitcount == charsize)
                 {
                     text += BitsToChar(buffer);
+                    bitcount = 0;
                 }
 
                 buffer[bitcount] = Block_xor(bmp, x, x + Block_Width, y, y + Block_Height);
@@ -480,9 +480,12 @@ namespace Sending
 
             int width = bmp.Width;
             int height = bmp.Height;
+            //StringBuilder error = new StringBuilder(height * width);
             int charsize = sizeof(char) * 8;
             int[] buffer = CharToBits(text[0]);
             int mask = (-1 << Shifter) - 1;
+            //error.AppendLine(text[0].ToString());
+            //error.AppendLine("---");
             for (int bitcount = 0; i <= text.Length;)
             {
                 int pixel = 0;
@@ -498,7 +501,8 @@ namespace Sending
                 pixel &= mask;
                 pixel |= buffer[bitcount];
                 bmp.SetPixel(x, y, System.Drawing.Color.FromArgb(pixel));
-                x+= GetStep(x,y);
+                //error.AppendLine( x.ToString() + " " + y.ToString());
+                x += GetStep(x,y);
                 if (x >= bmp.Width)
                 {
                     y += x / width;
@@ -540,10 +544,10 @@ namespace Sending
             int mask = 1 << Shifter;
             for (int bitcount = 0; y + Block_Height < bmp.Height; bitcount++)
             {
-                bitcount %= charsize;
-                if (bitcount == 0)
+                if (bitcount == charsize)
                 {
                     text += BitsToChar(buffer);
+                    bitcount = 0;
                 }
 
                 int pixel = bmp.GetPixel(x, y).ToArgb();
