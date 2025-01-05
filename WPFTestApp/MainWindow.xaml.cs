@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Text;
 
-namespace WPFTestApp
+namespace Sending
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
@@ -137,12 +137,12 @@ namespace WPFTestApp
                 }
             }
 
-            StringBuilder error = new StringBuilder(height*width);
+            //StringBuilder error = new StringBuilder(height*width);
             var rand = new Random();
             for (; y < bmp.Height;)
             {
                 int rand_bit = rand.Next(0, 2);
-                error.Append(rand_bit.ToString());
+                //error.Append(rand_bit.ToString());
 
                 int pixel = bmp.GetPixel(x, y).ToArgb();
                 pixel &= mask;
@@ -157,7 +157,7 @@ namespace WPFTestApp
             }
             File.Delete(Image_Adress.Content.ToString());
             bmp.Save(Image_Adress.Content.ToString());
-            Text.Text = error.ToString();//"Сообщение спрятано";
+            Text.Text = "Сообщение спрятано";//error.ToString();
             //MessageBox.Show(text, "");
         }
 
