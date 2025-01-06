@@ -171,14 +171,8 @@ namespace Sending
             int charsize = sizeof(char) * 8;
             int[] buffer = new int[charsize];
             int mask = 1 << Shifter;
-            for (int bitcount = 0; y < bmp.Height; bitcount++)
+            for (int bitcount = 0; y < bmp.Height; )
             {
-                if (bitcount == charsize)
-                {
-                    text += BitsToChar(buffer);
-                    bitcount = 0;
-                }
-
                 int pixel = bmp.GetPixel(x, y).ToArgb();
                 buffer[bitcount] = pixel & mask;
                 x++;
@@ -186,6 +180,13 @@ namespace Sending
                 {
                     y++;
                     x = 0;
+                }
+
+                bitcount++;
+                if (bitcount == charsize)
+                {
+                    text += BitsToChar(buffer);
+                    bitcount = 0;
                 }
             }
             try
@@ -362,14 +363,8 @@ namespace Sending
             int y = 0;
             int charsize = sizeof(char) * 8;
             int[] buffer = new int[charsize];
-            for (int bitcount = 0; y + Block_Height < bmp.Height; bitcount++)
+            for (int bitcount = 0; y + Block_Height < bmp.Height; )
             {
-                if (bitcount == charsize)
-                {
-                    text += BitsToChar(buffer);
-                    bitcount = 0;
-                }
-
                 buffer[bitcount] = Block_xor(bmp, x, x + Block_Width, y, y + Block_Height);
 
                 x += Block_Width;
@@ -377,6 +372,13 @@ namespace Sending
                 {
                     y += Block_Height;
                     x = 0;
+                }
+
+                bitcount++;
+                if (bitcount == charsize)
+                {
+                    text += BitsToChar(buffer);
+                    bitcount = 0;
                 }
             }
             try {
@@ -542,14 +544,8 @@ namespace Sending
             int charsize = sizeof(char) * 8;
             int[] buffer = new int[charsize];
             int mask = 1 << Shifter;
-            for (int bitcount = 0; y + Block_Height < bmp.Height; bitcount++)
+            for (int bitcount = 0; y + Block_Height < bmp.Height; )
             {
-                if (bitcount == charsize)
-                {
-                    text += BitsToChar(buffer);
-                    bitcount = 0;
-                }
-
                 int pixel = bmp.GetPixel(x, y).ToArgb();
                 buffer[bitcount] = pixel & mask;
                 x += GetStep(x, y);
@@ -557,6 +553,13 @@ namespace Sending
                 {
                     y += x / bmp.Width;
                     x %= bmp.Width;
+                }
+
+                bitcount++;
+                if (bitcount == charsize)
+                {
+                    text += BitsToChar(buffer);
+                    bitcount = 0;
                 }
             }
             try
