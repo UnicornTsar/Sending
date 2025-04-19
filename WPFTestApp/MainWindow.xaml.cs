@@ -243,9 +243,14 @@ namespace Sending
             Hide_Button.Click -= Hide_Block;
             Hide_Button.Click -= Hide_PRI;
             Hide_Button.Click += Hide;
+
             Find_Button.Click -= Find_Block;
             Find_Button.Click -= Find_PRI;
             Find_Button.Click += Find;
+
+            Capasity_button.Click -= Capasity_button_Click_Block;
+            Capasity_button.Click -= Capasity_button_Click_PRI;
+            Capasity_button.Click += Capasity_button_Click;
         }
 
         private void Block_Method(object sender, RoutedEventArgs e)
@@ -264,9 +269,14 @@ namespace Sending
             Hide_Button.Click -= Hide;
             Hide_Button.Click -= Hide_PRI;
             Hide_Button.Click += Hide_Block;
+
             Find_Button.Click -= Find;
             Find_Button.Click -= Find_PRI;
             Find_Button.Click += Find_Block;
+
+            Capasity_button.Click -= Capasity_button_Click;
+            Capasity_button.Click -= Capasity_button_Click_PRI;
+            Capasity_button.Click += Capasity_button_Click_Block;
         }
 
         private void Hide_Block(object sender, RoutedEventArgs e)
@@ -437,9 +447,14 @@ namespace Sending
             Hide_Button.Click -= Hide;
             Hide_Button.Click -= Hide_Block;
             Hide_Button.Click += Hide_PRI;
+
             Find_Button.Click -= Find;
             Find_Button.Click -= Find_Block;
             Find_Button.Click += Find_PRI;
+
+            Capasity_button.Click -= Capasity_button_Click;
+            Capasity_button.Click -= Capasity_button_Click_Block;
+            Capasity_button.Click += Capasity_button_Click_PRI;
         }
 
         private void Hide_PRI(object sender, RoutedEventArgs e)
@@ -603,6 +618,86 @@ namespace Sending
                         return;
                     }
                 }
+            }
+        }
+
+        private void Text_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Length_label.Content= Text.Text.Length;
+        }
+
+        private void Capasity_button_Click(object sender, RoutedEventArgs e)
+        {
+            Bitmap bmp;
+            try
+            {
+                bmp = LoadBitmap(Image_Adress.Content.ToString());
+                MessageBox.Show("Вместимость контейнера с этими ключами - " + (bmp.Width * bmp.Height / sizeof(char) - Key1.Text.Length - Key2.Text.Length) + " символов");
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка открытия файла-контейнера");
+                e.Handled = true;
+                return;
+            }
+        }
+        private void Capasity_button_Click_Block(object sender, RoutedEventArgs e)
+        {
+            Bitmap bmp;
+            try
+            {
+                bmp = LoadBitmap(Image_Adress.Content.ToString());
+
+                int cap = (bmp.Height / Block_Height) * (bmp.Width / Block_Width) - Key1.Text.Length - Key2.Text.Length;
+
+                MessageBox.Show("Вместимость контейнера с этими ключами - " + cap + " символов");
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка открытия файла-контейнера");
+                e.Handled = true;
+                return;
+            }
+        }
+        private void Capasity_button_Click_PRI(object sender, RoutedEventArgs e)
+        {
+            int x = 0;
+            bool check = int.TryParse(Key1.Text, out x);
+            if (!check || x <= 0)
+            {
+                MessageBox.Show("Первый ключ должен быть положительным ненулевым числом");
+                e.Handled = true;
+                return;
+            }
+
+            Bitmap bmp;
+            try
+            {
+                bmp = LoadBitmap(Image_Adress.Content.ToString());
+
+                int y = x / bmp.Width;
+                x = x % bmp.Width;
+                int cap = 0;
+                while (y < bmp.Height)
+                {
+                    cap++;
+
+                    x += GetStep(x, y);
+                    if (x >= bmp.Width)
+                    {
+                        y += x / bmp.Width;
+                        x %= bmp.Width;
+                    }
+                }
+                cap -= Key2.Text.Length;
+
+                MessageBox.Show("Вместимость контейнера с этими ключами - " + cap + " символов");
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка открытия файла-контейнера");
+                e.Handled = true;
+                return;
             }
         }
     }
