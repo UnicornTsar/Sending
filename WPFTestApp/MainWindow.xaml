@@ -35,7 +35,7 @@
             <TextBox x:Name="Text" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="6" TextWrapping="NoWrap" AcceptsReturn="True" Text="" Margin="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" TextChanged="Text_TextChanged"/>
             <TextBox x:Name="Key1" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Text="м|/|JI/-|Я" Margin="2"/>
             <TextBox x:Name="Key2" Grid.Column="2" Grid.Row="1" TextWrapping="Wrap" Text="|&lt;0Р0В|&lt;А" Margin="2"/>
-            <Label x:Name="Image_Adress" Content="Файл-контейнер не выбран" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Margin="2" AllowDrop="True" Drop="Image_Adress_Drop"/>
+            <TextBox x:Name="Image_Adress" Text="Файл-контейнер не выбран" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Margin="2" AllowDrop="True" Drop="Image_Adress_Drop" PreviewDragOver="Image_Adress_PreviewDragOver"/>
             <ComboBox Name="Choose_color" Grid.Column="3" Grid.Row="1" Margin="15 2" IsReadOnly="True" SelectionChanged="UpdateShifter"/>
             <ComboBox Name="Choose_bite" Grid.Column="4" Grid.Row="1" Margin="15 2" IsReadOnly="True" SelectionChanged="UpdateShifter"/>
             <Label Name="Length_label" Content="0" Grid.Column="5" Grid.Row="3" Margin="5,2"/>

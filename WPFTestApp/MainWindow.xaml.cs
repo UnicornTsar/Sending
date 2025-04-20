@@ -69,7 +69,7 @@ namespace Sending
             Bitmap bmp;
             try
             {
-                bmp = LoadBitmap(Image_Adress.Content.ToString());
+                bmp = LoadBitmap(Image_Adress.Text);
             }
             catch
             {
@@ -155,15 +155,15 @@ namespace Sending
                     x = 0;
                 }
             }
-            File.Delete(Image_Adress.Content.ToString());
-            bmp.Save(Image_Adress.Content.ToString());
+            File.Delete(Image_Adress.Text);
+            bmp.Save(Image_Adress.Text);
             Text.Text = "Сообщение спрятано";//error.ToString();
             //MessageBox.Show(text, "");
         }
 
         private void Find(object sender, RoutedEventArgs e)
         {
-            Bitmap bmp = LoadBitmap(Image_Adress.Content.ToString());
+            Bitmap bmp = LoadBitmap(Image_Adress.Text);
             String text = "";
 
             int x = 0;
@@ -214,7 +214,7 @@ namespace Sending
 
             if (result == true)
             {
-                Image_Adress.Content = fileDialog.FileName;
+                Image_Adress.Text = fileDialog.FileName;
             }
         }
 
@@ -284,7 +284,7 @@ namespace Sending
             Bitmap bmp;
             try
             {
-                bmp = LoadBitmap(Image_Adress.Content.ToString());
+                bmp = LoadBitmap(Image_Adress.Text);
             }
             catch
             {
@@ -358,15 +358,15 @@ namespace Sending
                     i++;
                 }
             }
-            File.Delete(Image_Adress.Content.ToString());
-            bmp.Save(Image_Adress.Content.ToString());
+            File.Delete(Image_Adress.Text);
+            bmp.Save(Image_Adress.Text);
             Text.Text = "Сообщение спрятано";
             //MessageBox.Show(text, "");
         }
 
         private void Find_Block(object sender, RoutedEventArgs e)
         {
-            Bitmap bmp = LoadBitmap(Image_Adress.Content.ToString());
+            Bitmap bmp = LoadBitmap(Image_Adress.Text);
             String text = "";
 
             int x = 0;
@@ -462,7 +462,7 @@ namespace Sending
             Bitmap bmp;
             try
             {
-                bmp = LoadBitmap(Image_Adress.Content.ToString());
+                bmp = LoadBitmap(Image_Adress.Text);
             }
             catch
             {
@@ -535,14 +535,14 @@ namespace Sending
                     i++;
                 }
             }
-            File.Delete(Image_Adress.Content.ToString());
-            bmp.Save(Image_Adress.Content.ToString());
+            File.Delete(Image_Adress.Text);
+            bmp.Save(Image_Adress.Text);
             Text.Text = "Сообщение спрятано";
             //MessageBox.Show(text, "");
         }
         private void Find_PRI(object sender, RoutedEventArgs e)
         {
-            Bitmap bmp = LoadBitmap(Image_Adress.Content.ToString());
+            Bitmap bmp = LoadBitmap(Image_Adress.Text);
             String text = "";
 
             int x;
@@ -614,7 +614,7 @@ namespace Sending
                 {
                     if (path.EndsWith(".bmp"))
                     {
-                        Image_Adress.Content = path;
+                        Image_Adress.Text = path;
                         return;
                     }
                 }
@@ -631,7 +631,7 @@ namespace Sending
             Bitmap bmp;
             try
             {
-                bmp = LoadBitmap(Image_Adress.Content.ToString());
+                bmp = LoadBitmap(Image_Adress.Text);
                 MessageBox.Show("Вместимость контейнера с этими ключами - " + (bmp.Width * bmp.Height / sizeof(char) - Key1.Text.Length - Key2.Text.Length) + " символов");
             }
             catch
@@ -646,7 +646,7 @@ namespace Sending
             Bitmap bmp;
             try
             {
-                bmp = LoadBitmap(Image_Adress.Content.ToString());
+                bmp = LoadBitmap(Image_Adress.Text);
 
                 int cap = (bmp.Height / Block_Height) * (bmp.Width / Block_Width) - Key1.Text.Length - Key2.Text.Length;
 
@@ -673,7 +673,7 @@ namespace Sending
             Bitmap bmp;
             try
             {
-                bmp = LoadBitmap(Image_Adress.Content.ToString());
+                bmp = LoadBitmap(Image_Adress.Text);
 
                 int y = x / bmp.Width;
                 x = x % bmp.Width;
@@ -699,6 +699,11 @@ namespace Sending
                 e.Handled = true;
                 return;
             }
+        }
+
+        private void Image_Adress_PreviewDragOver(object sender, DragEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }
