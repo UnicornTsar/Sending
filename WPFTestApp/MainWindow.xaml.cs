@@ -339,7 +339,10 @@ namespace Sending
                 {
                     int pixel = bmp.GetPixel(x, y).ToArgb();
                     pixel ^= bitchanger;
-                    bmp.SetPixel(x, y, System.Drawing.Color.FromArgb(pixel));
+                    int x_offset = GetStep(x, y);
+                    int y_offset = (x_offset / Block_Width) % Block_Height;
+                    x_offset %= Block_Width;
+                    bmp.SetPixel(x + x_offset, y + y_offset, System.Drawing.Color.FromArgb(pixel));
                 }
 
                 x+=Block_Width;
@@ -632,7 +635,7 @@ namespace Sending
             try
             {
                 bmp = LoadBitmap(Image_Adress.Text);
-                MessageBox.Show("Вместимость контейнера с этими ключами - " + (bmp.Width * bmp.Height / sizeof(char) - Key1.Text.Length - Key2.Text.Length) + " символов");
+                MessageBox.Show("Вместимость контейнера с этими ключами - " + (bmp.Width * bmp.Height / (sizeof(char) * 8) - Key1.Text.Length - Key2.Text.Length) + " символов");
             }
             catch
             {
@@ -648,7 +651,7 @@ namespace Sending
             {
                 bmp = LoadBitmap(Image_Adress.Text);
 
-                int cap = (bmp.Height / Block_Height) * (bmp.Width / Block_Width) - Key1.Text.Length - Key2.Text.Length;
+                int cap = ((bmp.Height / Block_Height) * (bmp.Width / Block_Width))/(sizeof(char) * 8) - Key1.Text.Length - Key2.Text.Length;
 
                 MessageBox.Show("Вместимость контейнера с этими ключами - " + cap + " символов");
             }
@@ -689,6 +692,7 @@ namespace Sending
                         x %= bmp.Width;
                     }
                 }
+                cap /= (sizeof(char) * 8);
                 cap -= Key2.Text.Length;
 
                 MessageBox.Show("Вместимость контейнера с этими ключами - " + cap + " символов");
